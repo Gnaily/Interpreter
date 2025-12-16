@@ -38,49 +38,49 @@
 
 ;if in decl
 (define if-9-in (decl "v" (if0 0 1 2)
-                    (if0 "v" 3 4)))
+                      (if0 "v" 3 4)))
 (define if-9-out 4)
 
 (define if-10-in (decl "v0" (if0 0 1 2)
-                      (decl "v1" (if0 1 3 4)
-                        (if "v0" "v1" "v0"))))
+                       (decl "v1" (if0 1 3 4)
+                             (if "v0" "v1" "v0"))))
 (define if-10-out 4)
 
 ;decl in if
 (define if-11-in  (if0 (decl "v0" 1 "v0")
-                      (decl "v1" 2 "v1")
-                      (decl "v1" 3 "v1")))
+                       (decl "v1" 2 "v1")
+                       (decl "v1" 3 "v1")))
 (define if-11-out 3)
 
 ;if in function
 (define sub1 (function "sub1" "x" (arith - "x" 1)))
 (define rec0 (function "rec" "x" 
-                (if0 "x" 0
-                  (call "rec" (call "sub1" "x")))))
+                       (if0 "x" 0
+                            (call "rec" (call "sub1" "x")))))
 
 (define if-12-in (program (list sub1 rec0) (call (name rec0) 4))) 
 (define if-12-out 0)
 
 (define rec1 (function "rec" "x" 
-                (if0 (call (fun "x" (call "sub1" "x")) "x") 0
-                  (call "rec" (call "sub1" "x")))))
+                       (if0 (call (fun "x" (call "sub1" "x")) "x") 0
+                            (call "rec" (call "sub1" "x")))))
 
 (define if-13-in (program (list sub1 rec1) (call (name rec1) 4))) 
 (define if-13-out 0)
 
 
 (define rec2 (function "rec" "x" 
-                (if0 (call  "sub1" "x") 0
-                  (call "rec" (if0 "x" 1 (call  "sub1" "x"))))))
+                       (if0 (call  "sub1" "x") 0
+                            (call "rec" (if0 "x" 1 (call  "sub1" "x"))))))
 
 (define if-14-in (program (list sub1 rec2) (call (name rec2) 4))) 
 (define if-14-out 0)
 
 (define f (function "f" "x" 
-                (if0 "x" (arith + "x" 1)
-                  (call (if0 (call "sub1" "x") 
-                           "sub1" 
-                           (fun "x" (arith + "x" 1))) "x") )))
+                    (if0 "x" (arith + "x" 1)
+                         (call (if0 (call "sub1" "x") 
+                                    "sub1" 
+                                    (fun "x" (arith + "x" 1))) "x") )))
 
 (define if-15-in (program (list sub1 f) (call (name f) 0))) 
 (define if-15-out 1)
